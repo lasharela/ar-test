@@ -1,34 +1,141 @@
-<!doctype HTML>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    </head>
-    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-    <script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
-    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-    <script src="https://rawgit.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-playground/events.js"></script>
-    <body style='margin : 0px; overflow: hidden;'>
-        <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
-        <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
+<!-- include a-frame -->
+<script src='../vendor/aframe/build/aframe.min.js'></script>
 
-        <a-assets>
-            <a-asset-item id="animated-asset" src="https://raw.githubusercontent.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-playground/models/CesiumMan.gltf"></a-asset-item>
-        </a-assets>
+<script src='vendor/a-mmd.js'></script>
 
-        <a-marker type='barcode' value='7'>
-            <a-box position='0 0.5 0' color="red"></a-box>
-        </a-marker>
+<!-- include ar.js for aframe -->
+<script src='../../build/aframe-ar.js'></script>
+<script>ARjs.Context.baseURL = '../../../three.js/'</script>
+<!-- include shadowonly-plane -->
+<script src='../demo-firefox-release/src/aframe-shadow-plane.js'></script>
 
-        <a-marker markerhandler emitevents="true" cursor="fuse: false; rayOrigin: mouse" id="animated-marker" type='barcode' value='6'>
-            <a-entity
-                id="animated-model"
-                gltf-model="#animated-asset"
-                scale="2">
-            </a-entity>
-        </a-marker>
+<!-- start the body of your page -->
+<body style='margin : 0px; overflow: hidden;'>
+	<!-- add some info at the top of the page -->
+	<div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1; display: none;'>
+		<a href='https://github.com/jeromeetienne/AR.js/' target='_blank'>AR.js</a> - A-Frame
+                <a href='https://github.com/mrdoob/three.js/tree/dev/examples/models/mmd#readme'>hatsune miku</a> with 
+                <a href='https://github.com/takahirox/a-mmd' target="blank">mmd</a>
+                by 
+                <a href='https://twitter.com/jerome_etienne' target='_blank'>@takahirox</a>
+	</div>
+	<!-- Define your scene -->
+	<a-scene antialias="true" embedded arjs='trackingMethod: best;'>
 
-        <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
-        <a-entity camera></a-entity>
-        </a-scene>
-    </body>
-</html>
+		<a-entity
+			light="type: ambient; color: #333">
+		</a-entity>
+	
+		<!-- Create a anchor to attach your augmented reality -->
+		<a-anchor hit-testing-enabled='true' shadow="type: pcfsoft">
+                        <a-entity scale='0.08 0.08 0.08' mmd>
+				<a-entity
+					mmd-model='model : models/miku/miku_v2.pmd; vmd : models/vmds/wavefile_v2.vmd;'
+					shadow="cast:true">
+				</a-entity>
+				<!-- <a-gltf-model src="models/baby_dino/scene.gltf"></a-gltf-model> -->
+                        </a-entity>
+
+			<a-entity 
+				light="type: directional; color: #888; intensity: 0.9; castShadow:true; shadowCameraVisible: false; shadowMapWidth:2048; shadowMapHeight:2048;" 
+				position="-5 20 5">
+			</a-entity>
+			<!-- add shadow only ground -->
+			<a-entity shadowonly-plane='width: 3; height: 3; opacity: 0.4'></a-entity>
+			
+                        <!-- <a-plane rotation="-90 0 0"
+                                color="#AAAAAA"
+                                opacity="0.5"
+                                height="15"
+                                width="15"
+                                shadow="receive:true">
+                        </a-plane> -->
+	                <!-- <a-circle				
+				rotation='-90 0 0'
+                                opacity='0.5'
+				src='url(../demo-firefox/images/UV_Grid_Sm.jpg)'
+				transparency='true'
+				radius='1'
+				shadow='receive:true'>
+			</a-circle> -->
+	                <!-- <a-entity				
+				rotation='-90 0 0'
+                                opacity="0.5"
+				src='url(../demo-firefox/images/transparent-texture.png)'
+				src='url(../demo-firefox/images/UV_Grid_Sm.jpg)'
+				radius="1.5"
+				shadow="receive:true">
+			</a-entity> -->
+
+		</a-anchor>
+		<!-- Define a static camera -->
+		<a-camera-static/>
+	</a-scene>
+</body>
+<!-- include a-frame -->
+<script src='../js/aframe.min.js'></script>
+
+<script src='../js/a-mmd.js'></script>
+
+<!-- include ar.js for aframe -->
+<script src='../js/aframe-ar.js'></script>
+<script>ARjs.Context.baseURL = '../../../three.js/'</script>
+<!-- include shadowonly-plane -->
+<script src='../js/aframe-shadow-plane.js'></script>
+
+<!-- start the body of your page -->
+<body style='margin : 0px; overflow: hidden;'>
+	<!-- add some info at the top of the page -->
+    <!-- Define your scene -->
+	<a-scene antialias="true" embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
+
+		<a-entity
+			light="type: ambient; color: #333">
+		</a-entity>
+	
+		<!-- Create a anchor to attach your augmented reality -->
+		<a-anchor hit-testing-enabled='true' shadow="type: pcfsoft">
+                        <a-entity scale='0.08 0.08 0.08' mmd>
+				<a-entity
+					mmd-model='model : models/miku/miku_v2.pmd; vmd : models/vmds/wavefile_v2.vmd;'
+					shadow="cast:true">
+				</a-entity>
+				<!-- <a-gltf-model src="models/baby_dino/scene.gltf"></a-gltf-model> -->
+                        </a-entity>
+
+			<a-entity 
+				light="type: directional; color: #888; intensity: 0.9; castShadow:true; shadowCameraVisible: false; shadowMapWidth:2048; shadowMapHeight:2048;" 
+				position="-5 20 5">
+			</a-entity>
+			<!-- add shadow only ground -->
+			<a-entity shadowonly-plane='width: 3; height: 3; opacity: 0.4'></a-entity>
+			
+                        <!-- <a-plane rotation="-90 0 0"
+                                color="#AAAAAA"
+                                opacity="0.5"
+                                height="15"
+                                width="15"
+                                shadow="receive:true">
+                        </a-plane> -->
+	                <!-- <a-circle				
+				rotation='-90 0 0'
+                                opacity='0.5'
+				src='url(../demo-firefox/images/UV_Grid_Sm.jpg)'
+				transparency='true'
+				radius='1'
+				shadow='receive:true'>
+			</a-circle> -->
+	                <!-- <a-entity				
+				rotation='-90 0 0'
+                                opacity="0.5"
+				src='url(../demo-firefox/images/transparent-texture.png)'
+				src='url(../demo-firefox/images/UV_Grid_Sm.jpg)'
+				radius="1.5"
+				shadow="receive:true">
+			</a-entity> -->
+
+		</a-anchor>
+		<!-- Define a static camera -->
+		<a-camera-static/>
+	</a-scene>
+</body>
